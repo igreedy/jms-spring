@@ -9,11 +9,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class AppProducer {
     public static void main(String[] args) {
         // 引入 resources/producer.xml 配置文件
-        ApplicationContext context = new ClassPathXmlApplicationContext("producer.xml");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("producer.xml");
 
         ProducerService service = context.getBean(ProducerService.class);
         for (int i = 0; i < 100; i++) {
             service.sendMessage("test" + i);
         }
+        // 会清除连接，达到关闭程序的效果
+        context.close();
     }
 }
